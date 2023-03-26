@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2157f3a8-5ffc-44df-be32-fc80f7061292" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../practicefrontend" beforeDir="false" afterPath="$PROJECT_DIR$/../practicefrontend" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/practicefrontend" beforeDir="false" afterPath="$PROJECT_DIR$/practicefrontend" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/practicefrontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/practicefrontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/practicefrontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/practicefrontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/practicefrontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/practicefrontend/src/App.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +24,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
