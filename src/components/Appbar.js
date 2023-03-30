@@ -3,9 +3,9 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/material/Menu';
+import { Button } from '@mui/material'
 
 export default function Appbar() {
   return (
@@ -24,7 +24,7 @@ export default function Appbar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Springboot React Full Stack Application
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button variant="contained" color="success"  href= "/addStudent">Add Student</Button>
         </Toolbar>
       </AppBar>
     </Box>
