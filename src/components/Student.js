@@ -9,22 +9,68 @@ export default function Student() {
     const paperStyle = { padding: '50px 20px', width: 600, margin: "20px auto" }
     const [students, setStudents] = useState([])
     let nevigate = useNavigate()
+    const token = localStorage.getItem('jwtToken')
+    console.log(token)
+    if (!token) {
+        console.error("JWT token not found");
+        // Redirect to login page if the token is missing
+        nevigate('/login');
+      }
 
     React.useEffect(() => {
-        fetch("http://localhost:8080/student/getAll")
-            .then(res => res.json())
-            .then((result) => {
-                setStudents(result)
-            })
-    }, [])
+        fetchStudents();
+    }, []);
 
-    const deleteStudent = (id) => {
-        fetch(`http://localhost:8080/student/${id}`, {
-            method: "DELETE",
-        }).then(() => {
-            nevigate("/")
-        });
+    const fetchStudents = async() => {
+        try {
+            const response = await fetch("http://localhost:8080/student/getAll", {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // If your backend requires cookies for session
+          })
+        .then(res => {
+            if (!res.ok) {
+                // Handle errors, such as unauthorized or not found
+                throw new Error('Network response was not ok: ' + res.status);
+            }
+            return res.json();
+        })
+        .then(result => {
+            setStudents(result);
+        })
+        }catch(error) {
+            console.error('Error fetching students:', error);
+        }        
     }
+
+    const deleteStudent = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:8080/student/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // Include cookies if required by the backend
+            });
+    
+            // Check if the response is successful (status code 2xx)
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            // Navigate to the "/Student" page after successful deletion
+            fetchStudents();
+            nevigate("/Student");
+        } catch (error) {
+            console.error("Error deleting student:", error);
+            // Handle the error (e.g., show a notification or alert to the user)
+            alert("Failed to delete the student. Please try again.");
+        }
+    };
 
     return (
         <Container>

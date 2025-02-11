@@ -10,30 +10,51 @@ import { useNavigate, useParams } from 'react-router-dom';
 export default function EditStudent() {
   let nevigate = useNavigate()
   const paperStyle = { padding: '50px 20px', width: 600, margin: "20px auto" }
+  const [students, setStudents] = useState([])
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
   const student = { name, address }
   const { id } = useParams()
+  const token = localStorage.getItem('jwtToken')
+    console.log(token)
+    if (!token) {
+        console.error("JWT token not found");
+        // Redirect to login page if the token is missing
+        nevigate('/login');
+      }
 
   const handleClick = (e) => {
     e.preventDefault()
     fetch(`http://localhost:8080/student/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+    },
       body: JSON.stringify(student)
     }).then(() => {
-      nevigate("/")
+      nevigate("/Student")
     });
   }
 
-  const loadStudent = () => {
-    fetch(`http://localhost:8080/student/${id}`)
-      .then(res => res.json())
-  }
-
   useEffect(() => {
-    loadStudent()
-  })
+    fetch(`http://localhost:8080/student/${id}`, {
+      method: "GET",
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+        credentials: 'include', // If your backend requires cookies for session
+      })
+      .then(res => res.json())
+      .then((result) => {
+        setStudents(result)
+      })
+  }, [students])
+
+  const onCancel = (e) => {
+    nevigate("/Student")
+  }
 
   return (
     <Container>
@@ -49,19 +70,20 @@ export default function EditStudent() {
           noValidate
           autoComplete="off"
         >
-          <TextField id="outlined-basic" label="Student Name" variant="outlined" fullWidth
+          <TextField id="outlined-required" fullWidth label=""
             value={name}
             onChange={(e) => setName(e.target.value)}
+            placeholder ={students.name}
           />
-          <TextField id="outlined-basic" label="Student Address" variant="outlined" fullWidth
+          <TextField id="outlined-basic" variant="outlined" fullWidth label=""
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            placeholder={students.address}
           />
-
           <Button variant="contained" color="success" onClick={handleClick}>
             Submit
           </Button>
-          <Button variant="contained" color="error" onClick={handleClick}>
+          <Button variant="contained" color="error" onClick={onCancel}>
             Cancel
           </Button>
         </Box>
