@@ -18,13 +18,15 @@ export default function Appbar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-          >     
-          <MenuIcon/>      
+          >
+            <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Springboot React Full Stack Application
           </Typography>
-          <Button variant="contained" color="success"  href= "/addStudent">Add Student</Button>
+          <Button style={{ margin: '0 8px' }} variant="contained" color="success" href="/addStudent">Add Student</Button>
+          <Button style={{ margin: '0 8px' }} variant="contained" color="success" href="/register">Register User</Button>
+          <Button style={{ margin: '0 8px' }} variant="contained" color="success" href="/logout">Logout</Button>
         </Toolbar>
       </AppBar>
     </Box>
