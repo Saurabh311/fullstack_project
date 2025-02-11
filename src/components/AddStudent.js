@@ -13,17 +13,25 @@ export default function AddStudent() {
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
   const student = { name, address }
+  const token = localStorage.getItem('jwtToken')
 
   const handleClick = (e) => {
     e.preventDefault()
-    fetch("http://localhost:8080/student/add", {
+    fetch("http://localhost:8080/student/add",{
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(student)
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(student),    
+      credentials: 'include', // If your backend requires cookies for session      
     }).then(() => {
-      console.log("New Student Added")
-      nevigate("/")
+      nevigate("/Student")
     });
+  }
+
+  const onCancel = (e) => {
+    nevigate("/Student")
   }
   return (
     <Container>
@@ -51,7 +59,7 @@ export default function AddStudent() {
           <Button variant="contained" color="success" onClick={handleClick}>
             Submit
           </Button>
-          <Button variant="contained" color="error" onClick={handleClick}>
+          <Button variant="contained" color="error" onClick={onCancel}>
             Cancel
           </Button>
 
